@@ -143,6 +143,82 @@
         }
         .btn-cta:hover { transform: translateY(-3px); }
 
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .hero-buttons .btn-cta {
+            margin: 0;
+        }
+
+        #diseno-grafico {
+            position: relative;
+            background: #111;
+            color: white;
+            overflow: hidden;
+        }
+
+        #diseno-grafico .container, #diseno-grafico h3 {
+            position: relative;
+            z-index: 1;
+            color: white;
+        }
+
+        .graphic-slider-wrapper {
+            position: relative;
+            max-width: 100%;
+            padding: 20px 0;
+            z-index: 1;
+        }
+
+        .graphic-slider-container {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .graphic-slide {
+            min-width: 60%;
+            margin: 0 2%;
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            transform: scale(0.9);
+            opacity: 0.5;
+            transition: all 0.5s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .graphic-slide.active {
+            transform: scale(1);
+            opacity: 1;
+            z-index: 10;
+        }
+
+        .graphic-slide img, .graphic-slide iframe, .graphic-slide video {
+            width: 100%; height: 450px; object-fit: cover; display: block;
+        }
+
+        .graphic-slide .slide-overlay {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 20px; color: white; font-weight: bold; font-size: 1.2em;
+        }
+
+        .graphic-nav-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            color: white; width: 50px; height: 50px; border-radius: 50%; cursor: pointer;
+            z-index: 20; backdrop-filter: blur(5px); transition: background 0.3s;
+        }
+
+        .graphic-nav-btn:hover { background: var(--primary-start); }
+        .graphic-prev { left: 20px; }
+        .graphic-next { right: 20px; }
+
         #portfolio {
             position: relative;
             background: url('images/fondo-portfolio.png') no-repeat center center/cover;
@@ -288,6 +364,59 @@
         }
         .copyright { text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
 
+
+        /* Diseño gráfico: conservar la proporción completa de cada imagen */
+        #diseno-grafico .slide-design {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #181818;
+        }
+        #diseno-grafico .slide-design img {
+            width: 100%;
+            height: 450px;
+            object-fit: contain;
+            cursor: zoom-in;
+            background: #181818;
+        }
+
+        /* Visor de imagen ampliada */
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+        .image-modal.active { display: flex; }
+        .image-modal img {
+            max-width: 95%;
+            max-height: 90vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 5px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+        }
+        .image-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            z-index: 10000;
+            line-height: 1;
+            background: transparent;
+            border: 0;
+        }
+        .image-modal-close:hover { color: var(--primary-end); }
+
         @media (max-width: 768px) {
             #navbar .container { 
                 grid-template-columns: 1fr auto; 
@@ -296,8 +425,18 @@
             #main-nav-horizontal { display: none; }
             
             .hero-content h2 { font-size: 2.5em; }
+
+            .hero-buttons {
+                gap: 12px;
+            }
+
+            .hero-buttons .btn-cta {
+                padding: 13px 25px;
+                font-size: 1em;
+            }
             
-            .slide { min-width: 85%; margin: 0 7.5%; }
+            .slide, .slide-design { min-width: 85%; margin: 0 7.5%; }
+            #diseno-grafico .slide-design img { height: auto; max-height: 70vh; }
 
             .about-container-classic { flex-direction: column; text-align: center; }
             .about-image-col { max-width: 100%; }
@@ -345,7 +484,10 @@
         <div class="hero-content">
             <h2>Luis Miguel Laynez Ferreiro</h2>
             <p>animación y diseño multimedia</p>
-            <a href="#portfolio" class="btn-cta">Proyectos</a>
+            <div class="hero-buttons">
+                <a href="#portfolio" class="btn-cta">Proyectos</a>
+                <a href="#diseno-grafico" class="btn-cta">Diseño gráfico</a>
+            </div>
         </div>
     </section>
 
@@ -359,16 +501,11 @@
                     
                     <div class="slide">
                         <video controls playsinline muted loop>
-                            <source src="videos/1.mkv" type="video/mp4"> 
+                            <source src="videos/1.mkv" type="video/x-matroska"> 
                         </video>
                         <div class="slide-overlay"></div>
                     </div>
-                                        <div class="slide">
-                        <video controls playsinline muted loop>
-                            <source src="videos/background-video.mp4" type="video/mp4">
-                        </video>
-                        <div class="slide-overlay"></div>
-                    </div>
+
                     <div class="slide">
                         <img src="images/2.png" alt="Proyecto 2">
                         <div class="slide-overlay"></div>
@@ -376,7 +513,7 @@
 
                     <div class="slide">
                         <video controls playsinline muted loop>
-                            <source src="videos/3.mkv" type="video/mp4">
+                            <source src="videos/3.mkv" type="video/x-matroska">
                         </video>
                         <div class="slide-overlay"></div>
                     </div>
@@ -397,62 +534,110 @@
                         </video>
                         <div class="slide-overlay"></div>
                     </div>
-                    <div class="slide">
-                        <video controls playsinline muted loop>
-                            <source src="videos/8.mp4" type="video/mp4">
-                        </video>
-                        <div class="slide-overlay"></div>
-                    </div>
-                    <div class="slide">
-                        <video controls playsinline muted loop>
-                            <source src="videos/9.mp4" type="video/mp4">
-                        </video>
-                        <div class="slide-overlay"></div>
-                    </div>
-                    <div class="slide">
-                        <video controls playsinline muted loop>
-                            <source src="videos/10.mp4" type="video/mp4">
-                        </video>
-                        <div class="slide-overlay"></div>
-                    </div>
-                        <div class="slide">
-                        <video controls playsinline muted loop>
-                            <source src="videos/11.mp4" type="video/mp4">
-                        </video>
-                        <div class="slide-overlay"></div>
-                    </div>
-                       <div class="slide">
-                        <video controls playsinline muted loop>
-                            <source src="videos/12.mp4" type="video/mp4">
-                        </video>
-                        <div class="slide-overlay"></div>
-                    </div>
-                        <div class="slide">
-                        <video controls playsinline muted loop>
-                            <source src="videos/13.mp4" type="video/mp4">
-                        </video>
-                        <div class="slide-overlay"></div>
-                    </div>
-                        <div class="slide">
-                        <video controls playsinline muted loop>
-                            <source src="videos/14.mp4" type="video/mp4">
-                        </video>
-                        <div class="slide-overlay"></div>
-                    </div>
-                        <div class="slide">
-                        <video controls playsinline muted loop>
-                            <source src="videos/15.mp4" type="video/mp4">
-                        </video>
-                        <div class="slide-overlay"></div>
-                    </div>
-                        <div class="slide">
-                        <video controls playsinline muted loop>
-                            <source src="videos/16.mp4" type="video/mp4">
-                        </video>
-                        <div class="slide-overlay"></div>
-                    </div>
                 </div>
                 <button class="nav-btn next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <section id="diseno-grafico" class="section">
+        <div class="container">
+            <h3 class="section-title">Diseño gráfico</h3>
+            
+            <div class="graphic-slider-wrapper">
+                <button class="graphic-nav-btn graphic-prev"><i class="fas fa-chevron-left"></i></button>
+                <div class="slider-container slider-container-design">
+
+    <div class="slide slide-design">
+        <img src="images/disenio grafico/1.png" alt="Diseño gráfico 1">
+    </div>
+
+    <div class="slide slide-design">
+        <img src="images/disenio grafico/2.png" alt="Diseño gráfico 2">
+    </div>
+
+    <div class="slide slide-design">
+        <img src="images/disenio grafico/3.png" alt="Diseño gráfico 3">
+    </div>
+
+    <div class="slide slide-design">
+        <img src="images/disenio grafico/4.png" alt="Diseño gráfico 4">
+    </div>
+
+    <div class="slide slide-design">
+        <img src="images/disenio grafico/5.png" alt="Diseño gráfico 5">
+    </div>
+
+    <div class="slide slide-design">
+        <img src="images/disenio grafico/6.png" alt="Diseño gráfico 6">
+    </div>
+
+    <div class="slide slide-design">
+        <img src="images/disenio grafico/7.png" alt="Diseño gráfico 7">
+    </div>
+
+    <div class="slide slide-design">
+        <img src="images/disenio grafico/8.png" alt="Diseño gráfico 8">
+    </div>
+
+    <div class="slide slide-design">
+        <img src="images/disenio grafico/9.png" alt="Diseño gráfico 9">
+    </div>
+
+    <div class="slide slide-design">
+        <img src="images/disenio grafico/10.png" alt="Diseño gráfico 10">
+    </div>
+
+    <div class="slide slide-design">
+        <img src="images/disenio grafico/11.png" alt="Diseño gráfico 11">
+    </div>
+
+    <div class="slide slide-design">
+        <img src="images/disenio grafico/12.png" alt="Diseño gráfico 12">
+    </div>
+
+    <div class="slide slide-design">
+        <img src="images/disenio grafico/13.png" alt="Diseño gráfico 13">
+    </div>
+
+    <div class="slide slide-design">
+        <img src="images/disenio grafico/14.png" alt="Diseño gráfico 14">
+    </div>
+
+    <div class="slide slide-design">
+        <img src="images/disenio grafico/15.png" alt="Diseño gráfico 15">
+    </div>
+
+    <div class="slide slide-design">
+        <img src="images/disenio grafico/16.png" alt="Diseño gráfico 16">
+    </div>
+
+    <div class="slide slide-design">
+        <img src="images/disenio grafico/17.png" alt="Diseño gráfico 17">
+    </div>
+
+    <div class="slide slide-design">
+        <img src="images/disenio grafico/18.png" alt="Diseño gráfico 18">
+    </div>
+
+    <div class="slide slide-design">
+        <img src="images/disenio grafico/19.png" alt="Diseño gráfico 19">
+    </div>
+
+    <div class="slide slide-design">
+        <img src="images/disenio grafico/20.png" alt="Diseño gráfico 20">
+    </div>
+
+    <div class="slide slide-design">
+        <img src="images/disenio grafico/21.png" alt="Diseño gráfico 21">
+    </div>
+
+    <div class="slide slide-design">
+        <img src="images/disenio grafico/22.png" alt="Diseño gráfico 22">
+    </div>
+
+</div>
+                <button class="graphic-nav-btn graphic-next"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
     </section>
@@ -518,6 +703,13 @@
         </div>
     </footer>
     
+
+    <!-- Visor para ampliar imágenes del carrusel de diseño gráfico -->
+    <div class="image-modal" id="imageModal" aria-hidden="true">
+        <button type="button" class="image-modal-close" aria-label="Cerrar imagen">&times;</button>
+        <img id="modalImage" src="" alt="Imagen ampliada">
+    </div>
+
     <script>
         $(document).ready(function() {
             
@@ -541,8 +733,9 @@
                 }
             });
 
-            const $container = $('.slider-container');
-            const $slides = $('.slide');
+            // Carrusel de proyectos
+            const $container = $('#portfolio .slider-container');
+            const $slides = $('#portfolio .slide');
             const totalSlides = $slides.length;
             let currentIndex = 1;
 
@@ -566,19 +759,82 @@
                 $slides.eq(currentIndex).addClass('active');
             }
 
-            $('.next').click(function() {
+            $('#portfolio .next').click(function() {
                 currentIndex = (currentIndex < totalSlides - 1) ? currentIndex + 1 : 0;
                 updateCarousel();
             });
 
-            $('.prev').click(function() {
+            $('#portfolio .prev').click(function() {
                 currentIndex = (currentIndex > 0) ? currentIndex - 1 : totalSlides - 1;
                 updateCarousel();
             });
 
-            $(window).resize(updateCarousel);
-            
+            // Carrusel de diseño gráfico
+            const $graphicContainer = $('#diseno-grafico .slider-container-design');
+            const $graphicSlides = $('#diseno-grafico .slide-design');
+            const totalGraphicSlides = $graphicSlides.length;
+            let graphicCurrentIndex = 1;
+
+            function updateGraphicCarousel() {
+                let slideWidthForCalculation = 64;
+                let centerOffset = 0;
+
+                if (window.innerWidth > 768) {
+                    slideWidthForCalculation = 64;
+                    centerOffset = (100 - slideWidthForCalculation) / 2;
+                } else {
+                    slideWidthForCalculation = 100;
+                    centerOffset = 0;
+                }
+
+                let translateX = -(graphicCurrentIndex * slideWidthForCalculation) + centerOffset;
+
+                $graphicContainer.css('transform', `translateX(${translateX}%)`);
+                
+                $graphicSlides.removeClass('active');
+                $graphicSlides.eq(graphicCurrentIndex).addClass('active');
+            }
+
+            $('.graphic-next').click(function() {
+                graphicCurrentIndex = (graphicCurrentIndex < totalGraphicSlides - 1) ? graphicCurrentIndex + 1 : 0;
+                updateGraphicCarousel();
+            });
+
+            $('.graphic-prev').click(function() {
+                graphicCurrentIndex = (graphicCurrentIndex > 0) ? graphicCurrentIndex - 1 : totalGraphicSlides - 1;
+                updateGraphicCarousel();
+            });
+
+            $(window).resize(function() {
+                updateCarousel();
+                updateGraphicCarousel();
+            });
+
             updateCarousel();
+            updateGraphicCarousel();
+
+            // Abrir imagen ampliada al pulsar cualquier diseño
+            $('#diseno-grafico').on('click', '.slide-design img', function() {
+                $('#modalImage')
+                    .attr('src', $(this).attr('src'))
+                    .attr('alt', $(this).attr('alt') || 'Imagen ampliada');
+                $('#imageModal').addClass('active').attr('aria-hidden', 'false');
+                $('body').css('overflow', 'hidden');
+            });
+
+            function closeImageModal() {
+                $('#imageModal').removeClass('active').attr('aria-hidden', 'true');
+                $('#modalImage').attr('src', '');
+                $('body').css('overflow', '');
+            }
+
+            $('.image-modal-close').on('click', closeImageModal);
+            $('#imageModal').on('click', function(e) {
+                if (e.target === this) closeImageModal();
+            });
+            $(document).on('keydown', function(e) {
+                if (e.key === 'Escape') closeImageModal();
+            });
         });
     </script>
 </body>
